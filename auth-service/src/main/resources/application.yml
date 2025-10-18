@@ -1,0 +1,18 @@
+server:
+  port: 8082
+
+spring:
+  application:
+    name: auth-service
+
+logging:
+  level:
+    dev.mehmetfd.auth: DEBUG
+
+jwt:
+  secret: "0645a4fb9156ffade8326244fc479dcc56e59295bea45f10212d0b4232087467"
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://discovery-service:8761/eureka/

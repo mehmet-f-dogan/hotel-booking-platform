@@ -1,0 +1,153 @@
+version: "3.9"
+
+services:
+  # ==============================
+  # 🔐 AUTH SERVICE
+  # ==============================
+  auth-service:
+    build: ./auth-service
+    container_name: auth-service
+    image: hotel-platform/auth-service
+    ports:
+      - "8082:8082"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - JWT_SECRET=0645a4fb9156ffade8326244fc479dcc56e59295bea45f10212d0b4232087467
+    depends_on:
+      user-service:
+        condition: service_started
+      discovery-service:
+        condition: service_healthy
+    networks:
+      - hotelnet
+
+  # ==============================
+  # 👥 USER SERVICE
+  # ==============================
+  user-service:
+    build: ./user-service
+    container_name: user-service
+    image: hotel-platform/user-service
+    ports:
+      - "8081:8081"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    depends_on:
+      discovery-service:
+        condition: service_healthy
+      db:
+        condition: service_healthy
+    networks:
+      - hotelnet
+
+  # ==============================
+  # 🏨 HOTEL SERVICE
+  # ==============================
+  hotel-service:
+    build: ./hotel-service
+    container_name: hotel-service
+    image: hotel-platform/hotel-service
+    ports:
+      - "8083:8083"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    depends_on:
+      discovery-service:
+        condition: service_healthy
+    networks:
+      - hotelnet
+
+  # ==============================
+  # 📅 RESERVATION SERVICE
+  # ==============================
+  reservation-service:
+    build: ./reservation-service
+    container_name: reservation-service
+    image: hotel-platform/reservation-service
+    ports:
+      - "8084:8084"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    depends_on:
+      discovery-service:
+        condition: service_healthy
+    networks:
+      - hotelnet
+
+  # ==============================
+  # 🔔 NOTIFICATION SERVICE
+  # ==============================
+  notification-service:
+    build: ./notification-service
+    container_name: notification-service
+    image: hotel-platform/notification-service
+    ports:
+      - "8085:8085"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    depends_on:
+      discovery-service:
+        condition: service_healthy
+    networks:
+      - hotelnet
+
+  # ==============================
+  # 🚪 API GATEWAY
+  # ==============================
+  api-gateway:
+    build: ./api-gateway
+    container_name: api-gateway
+    image: hotel-platform/api-gateway
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - JWT_SECRET=0645a4fb9156ffade8326244fc479dcc56e59295bea45f10212d0b4232087467
+    depends_on:
+      discovery-service:
+        condition: service_healthy
+      auth-service:
+        condition: service_started
+      user-service:
+        condition: service_started
+      hotel-service:
+        condition: service_started
+      reservation-service:
+        condition: service_started
+      notification-service:
+        condition: service_started
+    networks:
+      - hotelnet
+
+  discovery-service:
+    build: ./discovery-service
+    container_name: discovery-service
+    ports:
+      - "8761:8761"
+    networks:
+      - hotelnet
+    healthcheck:
+      test:
+        ["CMD-SHELL", "curl -f http://localhost:8761/actuator/health || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: hoteldb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    networks:
+      - hotelnet
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      retries: 5
+      start_period: 10s
+
+networks:
+  hotelnet:
+    driver: bridge
