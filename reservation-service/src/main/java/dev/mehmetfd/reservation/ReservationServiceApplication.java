@@ -12,7 +12,11 @@ import dev.mehmetfd.common.context.RequestContextFilter;
 @EnableDiscoveryClient
 public class ReservationServiceApplication {
     public static void main(String[] args) {
-        SpringApplication.run(ReservationServiceApplication.class, args);
+        SpringApplication app = new SpringApplication(ReservationServiceApplication.class);
+
+        app.setBanner((environment, sourceClass, out) -> {
+            out.println("=== Reservation Service ===");
+        });
     }
 
     @Bean
