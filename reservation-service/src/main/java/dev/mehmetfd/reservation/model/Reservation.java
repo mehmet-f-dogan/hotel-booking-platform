@@ -33,6 +33,9 @@ public class Reservation {
     private String guestName;
 
     @Nonnull
+    private String accountUsername;
+
+    @Nonnull
     private LocalDate checkInDate;
 
     @Nonnull
@@ -41,10 +44,12 @@ public class Reservation {
     @CreationTimestamp
     private LocalDateTime createdAt;
 
-    public Reservation(Long hotelId, Long roomId, String guestName, LocalDate checkInDate, LocalDate checkOutDate) {
+    public Reservation(Long hotelId, Long roomId, String guestName, String accountUsername, LocalDate checkInDate,
+            LocalDate checkOutDate) {
         this.hotelId = hotelId;
         this.roomId = roomId;
         this.guestName = guestName;
+        this.accountUsername = accountUsername;
         this.checkInDate = checkInDate;
         this.checkOutDate = checkOutDate;
     }

@@ -15,6 +15,10 @@ public class ReservationEventProducer {
     }
 
     public void sendReservationEvent(ReservationEvent event) {
-        kafkaTemplate.send("reservation-events", event);
+        kafkaTemplate.send("reservation-events", event.reservationId().toString(), event);
+    }
+
+    public void sendReservationDeleteEvent(Long reservationId) {
+        kafkaTemplate.send("reservation-events", reservationId.toString(), null);
     }
 }

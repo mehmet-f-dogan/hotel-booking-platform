@@ -1,5 +1,7 @@
 package dev.mehmetfd.reservation.service;
 
+import dev.mehmetfd.common.context.RequestContext;
+import dev.mehmetfd.common.context.RequestContextHolder;
 import dev.mehmetfd.common.dto.ReservationEvent;
 import dev.mehmetfd.reservation.model.Reservation;
 import dev.mehmetfd.reservation.repository.ReservationRepository;
@@ -39,30 +41,16 @@ public class ReservationService {
                 throw new IllegalStateException("Room " + roomId + " is already reserved in that date range");
             }
 
-            Reservation reservation = new Reservation(hotelId, roomId, guestName, checkIn, checkOut);
+            RequestContext ctx = RequestContextHolder.get();
+            String accountUsername = ctx.username();
+
+            Reservation reservation = new Reservation(hotelId, roomId, guestName, accountUsername, checkIn, checkOut);
             savedReservation[0] = reservationRepository.save(reservation);
 
-            reservationEventProducer.sendReservationEvent(
-                    new ReservationEvent(hotelId, reservation.getId(), roomId, guestName, checkIn, checkOut));
+            reservationEventProducer.sendReservationEvent(toEvent(savedReservation[0], accountUsername));
         });
 
         return savedReservation[0];
-    }
-
-    public Optional<Reservation> getReservation(Long id) {
-        return reservationRepository.findById(id);
-    }
-
-    public List<Reservation> getAllReservations() {
-        return reservationRepository.findAll();
-    }
-
-    public List<Reservation> getReservationsByRoom(Long roomId) {
-        return reservationRepository.findByRoomId(roomId);
-    }
-
-    public List<Reservation> getReservationsByHotel(Long hotelId) {
-        return reservationRepository.findByHotelId(hotelId);
     }
 
     @Transactional
@@ -86,6 +74,9 @@ public class ReservationService {
             reservation.setCheckOutDate(newCheckOut);
             reservation.setGuestName(newGuestName);
             reservationRepository.save(reservation);
+
+            RequestContext ctx = RequestContextHolder.get();
+            reservationEventProducer.sendReservationEvent(toEvent(reservation, ctx.username()));
         });
 
         return reservation;
@@ -95,10 +86,20 @@ public class ReservationService {
     public void deleteReservation(Long id) {
         Reservation reservation = reservationRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Reservation not found"));
+
         String lockKey = "room-" + reservation.getRoomId();
         lockService.executeWithLock(lockKey, () -> {
             reservationRepository.deleteById(id);
+            reservationEventProducer.sendReservationDeleteEvent(reservation.getId());
         });
+    }
+
+    public Optional<Reservation> getReservation(Long id) {
+        return reservationRepository.findById(id);
+    }
+
+    public List<Reservation> getAllReservations() {
+        return reservationRepository.findAll();
     }
 
     private void validateDates(LocalDate checkIn, LocalDate checkOut) {
@@ -109,5 +110,16 @@ public class ReservationService {
         if (!checkOut.isAfter(checkIn)) {
             throw new IllegalArgumentException("Check-out must be after check-in");
         }
+    }
+
+    private ReservationEvent toEvent(Reservation reservation, String accountUsername) {
+        return new ReservationEvent(
+                reservation.getId(),
+                reservation.getHotelId(),
+                reservation.getRoomId(),
+                reservation.getGuestName(),
+                accountUsername,
+                reservation.getCheckInDate(),
+                reservation.getCheckOutDate());
     }
 }

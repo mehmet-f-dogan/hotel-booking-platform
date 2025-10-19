@@ -7,6 +7,7 @@ public record ReservationEvent(
         Long hotelId,
         Long roomId,
         String guestName,
+        String accountUsername,
         LocalDate checkInDate,
         LocalDate checkOutDate) {
 }
