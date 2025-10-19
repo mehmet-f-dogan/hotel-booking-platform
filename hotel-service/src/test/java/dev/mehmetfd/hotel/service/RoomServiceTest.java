@@ -86,6 +86,7 @@ class RoomServiceTest {
     void testUpdateRoom_Success() {
         Room room = new Room();
         room.setId(1L);
+        room.setRoomNumber("102");
 
         RoomRequest request = new RoomRequest(1L, "102", 3, BigDecimal.TEN);
 

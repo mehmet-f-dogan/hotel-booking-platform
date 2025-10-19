@@ -7,6 +7,7 @@ import dev.mehmetfd.common.dto.RoomDto;
 import dev.mehmetfd.common.exception.BadRequestException;
 import dev.mehmetfd.common.exception.ResourceNotFoundException;
 import dev.mehmetfd.common.exception.TryLaterException;
+import dev.mehmetfd.common.exception.UnauthorizedException;
 import dev.mehmetfd.reservation.model.Reservation;
 import dev.mehmetfd.reservation.repository.ReservationRepository;
 
@@ -73,7 +74,7 @@ public class ReservationService {
         });
 
         Reservation returnReservation = savedReservation[0];
-        if (returnReservation == null){
+        if (returnReservation == null) {
             throw new TryLaterException();
         }
         return returnReservation;
@@ -85,6 +86,13 @@ public class ReservationService {
 
         Reservation reservation = reservationRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Reservation not found"));
+
+        final RequestContext ctx = RequestContextHolder.get();
+        final String accountUsername = ctx.username();
+
+        if (!reservation.getAccountUsername().equals(accountUsername)) {
+            throw new UnauthorizedException();
+        }
 
         String lockKey = "room-" + reservation.getRoomId();
         lockService.executeWithLock(lockKey, () -> {
@@ -101,18 +109,29 @@ public class ReservationService {
             reservation.setGuestName(newGuestName);
             reservationRepository.save(reservation);
 
-            RequestContext ctx = RequestContextHolder.get();
-            reservationEventProducer.sendReservationEvent(toEvent(reservation, ctx.username()));
+            reservationEventProducer.sendReservationEvent(toEvent(reservation, accountUsername));
         });
 
         return reservation;
     }
 
     public void deleteReservation(long id) {
-        Reservation reservation = reservationRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Reservation not found"));
+        Optional<Reservation> reservationOptional = reservationRepository.findById(id);
+
+        if (reservationOptional.isEmpty()) {
+            throw new UnauthorizedException();
+        }
+
+        Reservation reservation = reservationOptional.get();
 
         String lockKey = "room-" + reservation.getRoomId();
+
+        RequestContext ctx = RequestContextHolder.get();
+        String accountUsername = ctx.username();
+
+        if (!reservation.getAccountUsername().equals(accountUsername)) {
+            throw new UnauthorizedException();
+        }
 
         lockService.executeWithLock(lockKey, () -> {
             reservationRepository.deleteById(id);
@@ -124,9 +143,9 @@ public class ReservationService {
         RequestContext ctx = RequestContextHolder.get();
         String accountUsername = ctx.username();
         Optional<Reservation> optionalReservation = reservationRepository.findById(id);
-        if(optionalReservation.isPresent() ){
+        if (optionalReservation.isPresent()) {
             Reservation r = optionalReservation.get();
-            if(r.getAccountUsername().equals(accountUsername)){
+            if (r.getAccountUsername().equals(accountUsername)) {
                 return Optional.of(r);
             }
         }

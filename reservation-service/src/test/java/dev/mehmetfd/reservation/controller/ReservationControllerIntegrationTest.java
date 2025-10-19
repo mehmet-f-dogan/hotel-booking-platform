@@ -77,7 +77,7 @@ class ReservationControllerIntegrationTest {
                 doNothing().when(reservationEventProducer).sendReservationDeleteEvent(any());
 
                 RequestContext ctx = mock(RequestContext.class);
-                when(ctx.username()).thenReturn("integrationUser");
+                when(ctx.username()).thenReturn("username");
                 mockedCtxHolder = mockStatic(RequestContextHolder.class);
                 mockedCtxHolder.when(RequestContextHolder::get).thenReturn(ctx);
         }
@@ -133,7 +133,7 @@ class ReservationControllerIntegrationTest {
                 when(restTemplate.getForObject("http://HOTEL-SERVICE/rooms/" + roomId, RoomDto.class))
                                 .thenReturn(roomDto);
 
-                Reservation existing = new Reservation(hotelId, roomId, "Other", "someone", checkIn, checkOut);
+                Reservation existing = new Reservation(hotelId, roomId, "Other", "username", checkIn, checkOut);
                 reservationRepository.saveAndFlush(existing);
 
                 CreateReservationRequest req = new CreateReservationRequest(hotelId, roomId, "GuestX", checkIn,
@@ -146,7 +146,7 @@ class ReservationControllerIntegrationTest {
 
         @Test
         void updateReservation_success() throws Exception {
-                Reservation r = new Reservation(1L, 300L, "G", "acct", LocalDate.now().plusDays(5),
+                Reservation r = new Reservation(1L, 300L, "G", "username", LocalDate.now().plusDays(5),
                                 LocalDate.now().plusDays(7));
                 r = reservationRepository.save(r);
 
@@ -167,7 +167,7 @@ class ReservationControllerIntegrationTest {
 
         @Test
         void deleteReservation_success() throws Exception {
-                Reservation r = new Reservation(1L, 400L, "G", "acct", LocalDate.now().plusDays(2),
+                Reservation r = new Reservation(1L, 400L, "G", "username", LocalDate.now().plusDays(2),
                                 LocalDate.now().plusDays(3));
                 r = reservationRepository.saveAndFlush(r);
 

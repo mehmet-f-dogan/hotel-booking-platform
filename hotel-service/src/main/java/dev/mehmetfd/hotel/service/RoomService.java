@@ -63,8 +63,6 @@ public class RoomService {
             throw new ResourceNotFoundException("Hotel not found with id " + request.hotelId());
         }
 
-        room.setHotelId(request.hotelId());
-        room.setRoomNumber(request.roomNumber());
         room.setCapacity(request.capacity());
         room.setPricePerNight(request.pricePerNight());
         return roomRepository.save(room);

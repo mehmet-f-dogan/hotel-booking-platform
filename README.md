@@ -28,9 +28,10 @@ cd hotel-booking-platform
 
 ## Running the Application
 
-Simply use Docker Compose:
+Simply build jars and use Docker Compose:
 
 ```bash
+mvn clean package -DskipTests
 docker-compose up --build
 ```
 
@@ -153,7 +154,7 @@ CreateReservationRequest Example:
 ```json
 {
   "hotelId": 1,
-  "roomId": 101,
+  "roomId": "101",
   "guestName": "John Doe",
   "checkIn": "2025-11-01",
   "checkOut": "2025-11-05"

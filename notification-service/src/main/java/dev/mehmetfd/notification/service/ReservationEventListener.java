@@ -16,8 +16,8 @@ public class ReservationEventListener {
 
         if (event == null) {
             System.out.println("Reservation with ID: " + reservationId + " got deleted.");
+        } else {
+            System.out.println("Reservation ID: " + reservationId + " | " + event);
         }
-
-        System.out.println("Reservation ID: " + reservationId + " | " + event);
     }
 }

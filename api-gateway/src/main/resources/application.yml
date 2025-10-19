@@ -15,8 +15,7 @@ spring:
         - id: hotel-service
           uri: lb://HOTEL-SERVICE
           predicates:
-            - Path=/api/hotels/**
-            - Path=/api/rooms/**
+            - Path=/api/hotels/**, /api/rooms/**
           filters:
             - RewritePath=/api/(?<remaining>.*), /${remaining}
         - id: reservation-service

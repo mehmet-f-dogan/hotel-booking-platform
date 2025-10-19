@@ -1,0 +1,18 @@
+spring:
+  cloud:
+    discovery:
+      enabled: false
+  main:
+    allow-bean-definition-overriding: true
+    web-application-type: reactive
+eureka:
+  client:
+    enabled: false
+    register-with-eureka: false
+    fetch-registry: false
+logging:
+  level:
+    root: INFO
+    dev.mehmetfd.gateway.security.RoleFilter: DEBUG
+jwt:
+  secret: "QmCTh1o5dV6TQzL9vG7g2c3Lx8zF4pN0sUwE1rYtZjXoKbHd5S2aQ9fM3nVwR8tY"

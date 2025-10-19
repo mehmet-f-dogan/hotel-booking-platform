@@ -10,10 +10,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.mock.http.server.reactive.MockServerHttpRequest;
 import org.springframework.mock.web.server.MockServerWebExchange;
 import org.springframework.web.server.ServerWebExchange;
+import org.springframework.web.server.WebFilterChain;
 
 import dev.mehmetfd.common.constants.Role;
 
-import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
@@ -29,7 +29,7 @@ import static org.mockito.Mockito.*;
 class JwtAuthenticationFilterTest {
 
     private JwtAuthenticationFilter filter;
-    private GatewayFilterChain chain;
+    private WebFilterChain chain;
 
     private String secretKey;
     private Key key;
@@ -37,7 +37,7 @@ class JwtAuthenticationFilterTest {
     @BeforeEach
     void setup() {
         filter = new JwtAuthenticationFilter();
-        chain = mock(GatewayFilterChain.class);
+        chain = mock(WebFilterChain.class);
         when(chain.filter(any())).thenReturn(Mono.empty());
 
         key = Keys.secretKeyFor(SignatureAlgorithm.HS256);

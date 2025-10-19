@@ -5,11 +5,13 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import org.junit.jupiter.api.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpHeaders;
 import org.springframework.test.web.reactive.server.WebTestClient;
+import org.springframework.context.ApplicationContext;
 
 import java.security.Key;
 import java.util.Base64;
@@ -32,8 +34,7 @@ class ApiGatewayIntegrationTest {
                 .baseUrl("http://localhost:" + port)
                 .build();
     }
-
-    private String createToken(String userId, Role role, String username) {
+    private String createToken(Long userId, Role role, String username) {
         byte[] decodedKey = Base64.getDecoder().decode(jwtSecret);
         Key key = Keys.hmacShaKeyFor(decodedKey);
 
@@ -49,11 +50,15 @@ class ApiGatewayIntegrationTest {
 
     @Test
     void nonAdminCannotDeleteHotel() {
-        String token = createToken("456", Role.USER, "mehmet");
+        String token = createToken(456l, Role.USER, "mehmet");
 
         client.delete().uri("/api/hotels/1")
                 .header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
                 .exchange()
                 .expectStatus().isForbidden();
+
+        try{
+            Thread.sleep(10000);
+        } catch (Exception e){}
     }
 }

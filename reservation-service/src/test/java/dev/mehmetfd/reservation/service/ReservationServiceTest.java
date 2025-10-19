@@ -4,6 +4,7 @@ import dev.mehmetfd.common.context.RequestContext;
 import dev.mehmetfd.common.context.RequestContextHolder;
 import dev.mehmetfd.common.dto.RoomDto;
 import dev.mehmetfd.common.exception.BadRequestException;
+import dev.mehmetfd.common.exception.UnauthorizedException;
 import dev.mehmetfd.reservation.model.Reservation;
 import dev.mehmetfd.reservation.repository.ReservationRepository;
 import org.junit.jupiter.api.*;
@@ -82,7 +83,7 @@ class ReservationServiceTest {
         });
 
         RequestContext mockCtx = mock(RequestContext.class);
-        when(mockCtx.username()).thenReturn("accountUser");
+        when(mockCtx.username()).thenReturn("admin");
         try (MockedStatic<RequestContextHolder> holder = mockStatic(RequestContextHolder.class)) {
             holder.when(RequestContextHolder::get).thenReturn(mockCtx);
 
@@ -173,7 +174,7 @@ class ReservationServiceTest {
         when(reservationRepository.save(any(Reservation.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
         RequestContext mockCtx = mock(RequestContext.class);
-        when(mockCtx.username()).thenReturn("accountUser");
+        when(mockCtx.username()).thenReturn("account");
         try (MockedStatic<RequestContextHolder> holder = mockStatic(RequestContextHolder.class)) {
             holder.when(RequestContextHolder::get).thenReturn(mockCtx);
 
@@ -208,7 +209,12 @@ class ReservationServiceTest {
         when(reservationRepository.findById(id)).thenReturn(Optional.of(r));
         doNothing().when(reservationRepository).deleteById(id);
 
-        reservationService.deleteReservation(id);
+        RequestContext mockCtx = mock(RequestContext.class);
+        when(mockCtx.username()).thenReturn("account");
+        try (MockedStatic<RequestContextHolder> holder = mockStatic(RequestContextHolder.class)) {
+            holder.when(RequestContextHolder::get).thenReturn(mockCtx);
+            reservationService.deleteReservation(id);
+        }
 
         verify(reservationRepository).deleteById(id);
         verify(reservationEventProducer).sendReservationDeleteEvent(id);
@@ -219,8 +225,7 @@ class ReservationServiceTest {
         when(reservationRepository.findById(999L)).thenReturn(Optional.empty());
 
         assertThatThrownBy(() -> reservationService.deleteReservation(999L))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("Reservation not found");
+                .isInstanceOf(UnauthorizedException.class);
     }
 
     @Test
@@ -234,6 +239,7 @@ class ReservationServiceTest {
         when(restTemplate.getForObject(anyString(), eq(RoomDto.class))).thenReturn(roomDto);
 
         RequestContext mockCtx = mock(RequestContext.class);
+        when(mockCtx.username()).thenReturn("account");
         try (MockedStatic<RequestContextHolder> holder = mockStatic(RequestContextHolder.class)) {
             holder.when(RequestContextHolder::get).thenReturn(mockCtx);
             assertThatThrownBy(() -> reservationService.createReservation(hotelId, roomId, "g", yesterday, tomorrow))
@@ -253,6 +259,7 @@ class ReservationServiceTest {
         when(restTemplate.getForObject(anyString(), eq(RoomDto.class))).thenReturn(roomDto);
 
         RequestContext mockCtx = mock(RequestContext.class);
+        when(mockCtx.username()).thenReturn("account");
         try (MockedStatic<RequestContextHolder> holder = mockStatic(RequestContextHolder.class)) {
             holder.when(RequestContextHolder::get).thenReturn(mockCtx);
             assertThatThrownBy(() -> reservationService.createReservation(hotelId, roomId, "g", checkIn, checkOut))

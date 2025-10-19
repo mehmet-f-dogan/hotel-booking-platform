@@ -1,0 +1,1530 @@
+{
+	"info": {
+		"_postman_id": "4aac905b-3160-4382-83c4-8891f951da8d",
+		"name": "Hotel API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "48929439",
+		"_collection_link": "https://mehmet-8ee26376-1118659.postman.co/workspace/Mehmet-Dogan's-Workspace~29c5980f-d098-4b6c-8c94-8c2c80346a7b/collection/48929439-4aac905b-3160-4382-83c4-8891f951da8d?action=share&source=collection_link&creator=48929439"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Create Admin User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"username\": \"admin\", \"password\": \"admin123\", \"role\": \"ADMIN\" }"
+						},
+						"url": {
+							"raw": "{{baseURL}}/auth/create",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"auth",
+								"create"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Create Admin User",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{ \"username\": \"admin\", \"password\": \"admin123\", \"role\": \"ADMIN\" }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/auth/create",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"auth",
+										"create"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Sun, 19 Oct 2025 05:24:04 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "text/plain;charset=UTF-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "12"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [
+								{
+									"expires": "Invalid Date",
+									"domain": "",
+									"path": ""
+								}
+							],
+							"body": "User created"
+						}
+					]
+				},
+				{
+					"name": "Create Normal User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"username\": \"user\", \"password\": \"user123\", \"role\": \"USER\" }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/auth/create",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"auth",
+								"create"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Create Normal User",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{ \"username\": \"user\", \"password\": \"user123\", \"role\": \"USER\" }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/auth/create",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"auth",
+										"create"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "Date",
+									"value": "Sun, 19 Oct 2025 05:24:24 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "text/plain;charset=UTF-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "12"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "User created"
+						}
+					]
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"username\": \"user\", \"password\": \"user123\" }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/auth/login",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Login",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{ \"username\": \"admin\", \"password\": \"admin123\" }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/auth/login",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"auth",
+										"login"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "Date",
+									"value": "Sun, 19 Oct 2025 05:25:33 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"accessToken\": \"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGUiOiJBRE1JTiIsInVzZXJpZCI6MSwiaWF0IjoxNzYwODUxNTMzLCJleHAiOjE3NjA4NTUxMzN9.4MyK-JfEbDQT8-bLYk3SCyKkcsGNtyCRyQupXKFl05A\",\n    \"refreshToken\": \"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGUiOiJBRE1JTiIsInVzZXJpZCI6MSwiaWF0IjoxNzYwODUxNTMzLCJleHAiOjE3NjE0NTYzMzN9.IDu1yuV37BKQuOXr8ffeYgI_Hs2jFetC_cm3_SdroPc\",\n    \"role\": \"ADMIN\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Refresh Token",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGUiOiJBRE1JTiIsInVzZXJpZCI6MSwiaWF0IjoxNzYwODUxODk4LCJleHAiOjE3NjE0NTY2OTh9.Dh_e9S-AyX_Ffqz1gPaRAekd0okf17Ih77i07T8GeJk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/auth/refresh",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"auth",
+								"refresh"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Refresh Token",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/auth/refresh",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"auth",
+										"refresh"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "Date",
+									"value": "Sun, 19 Oct 2025 06:24:35 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"accessToken\": \"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGUiOiJBRE1JTiIsInVzZXJpZCI6MSwiaWF0IjoxNzYwODU1MDc1LCJleHAiOjE3NjA4NTg2NzV9.oEUSl9ClYQuQlzPKikKGEfOkl9zIHHZQaoQeZwV6luA\",\n    \"refreshToken\": \"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGUiOiJBRE1JTiIsInVzZXJpZCI6MSwiaWF0IjoxNzYwODUxODk4LCJleHAiOjE3NjE0NTY2OTh9.Dh_e9S-AyX_Ffqz1gPaRAekd0okf17Ih77i07T8GeJk\",\n    \"role\": \"ADMIN\"\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Hotels",
+			"item": [
+				{
+					"name": "Create A Hotel",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGUiOiJBRE1JTiIsInVzZXJpZCI6MSwiaWF0IjoxNzYwODc5NDA4LCJleHAiOjE3NjA4ODMwMDh9.SIfAjWERh_kEz8_cqeis-ob7iOLNA64yshxTWy3RC2k",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"Grand Hotel\",\r\n  \"address\": \"123 Main St\",\r\n  \"starRating\": 5\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/hotels",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"hotels"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "New Request",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"name\": \"Grand Hotel\",\r\n  \"address\": \"123 Main St\",\r\n  \"starRating\": 5\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/hotels",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"hotels"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "Date",
+									"value": "Sun, 19 Oct 2025 13:10:29 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 1,\n    \"name\": \"Grand Hotel\",\n    \"address\": \"123 Main St\",\n    \"starRating\": 5,\n    \"createdBy\": \"admin\",\n    \"createdAt\": \"2025-10-19T13:10:29.734548\",\n    \"updatedAt\": \"2025-10-19T13:10:29.734749\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Get A Hotel",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGUiOiJBRE1JTiIsInVzZXJpZCI6MSwiaWF0IjoxNzYwODc5NDA4LCJleHAiOjE3NjA4ODMwMDh9.SIfAjWERh_kEz8_cqeis-ob7iOLNA64yshxTWy3RC2k",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/hotels/1",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"hotels",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "New Request",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseURL}}/hotels/1",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"hotels",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "Date",
+									"value": "Sun, 19 Oct 2025 13:11:13 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 1,\n    \"name\": \"Grand Hotel\",\n    \"address\": \"123 Main St\",\n    \"starRating\": 5,\n    \"createdBy\": \"admin\",\n    \"createdAt\": \"2025-10-19T13:10:29.734548\",\n    \"updatedAt\": \"2025-10-19T13:10:29.734749\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Get All Hotels",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGUiOiJBRE1JTiIsInVzZXJpZCI6MSwiaWF0IjoxNzYwODc5NDA4LCJleHAiOjE3NjA4ODMwMDh9.SIfAjWERh_kEz8_cqeis-ob7iOLNA64yshxTWy3RC2k",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseURL}}/hotels",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"hotels"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "New Request",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{baseURL}}/hotels",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"hotels"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "Date",
+									"value": "Sun, 19 Oct 2025 13:11:33 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": 1,\n        \"name\": \"Grand Hotel\",\n        \"address\": \"123 Main St\",\n        \"starRating\": 5,\n        \"createdBy\": \"admin\",\n        \"createdAt\": \"2025-10-19T13:10:29.734548\",\n        \"updatedAt\": \"2025-10-19T13:10:29.734749\"\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "Update A Hotel",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGUiOiJBRE1JTiIsInVzZXJpZCI6MSwiaWF0IjoxNzYwODc5NDA4LCJleHAiOjE3NjA4ODMwMDh9.SIfAjWERh_kEz8_cqeis-ob7iOLNA64yshxTWy3RC2k",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"Grand Hotel\",\r\n  \"address\": \"123 Main St\",\r\n  \"starRating\": 5\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/hotels/1",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"hotels",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "New Request",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"name\": \"Grand Hotel\",\r\n  \"address\": \"123 Main St\",\r\n  \"starRating\": 5\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/hotels/1",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"hotels",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "Date",
+									"value": "Sun, 19 Oct 2025 13:11:58 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 1,\n    \"name\": \"Grand Hotel\",\n    \"address\": \"123 Main St\",\n    \"starRating\": 5,\n    \"createdBy\": \"admin\",\n    \"createdAt\": \"2025-10-19T13:10:29.734548\",\n    \"updatedAt\": \"2025-10-19T13:10:29.734749\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Delete A Hotel",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGUiOiJBRE1JTiIsInVzZXJpZCI6MSwiaWF0IjoxNzYwODc5NDA4LCJleHAiOjE3NjA4ODMwMDh9.SIfAjWERh_kEz8_cqeis-ob7iOLNA64yshxTWy3RC2k",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/hotels/1",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"hotels",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "New Request",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseURL}}/hotels/1",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"hotels",
+										"1"
+									]
+								}
+							},
+							"status": "No Content",
+							"code": 204,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "Date",
+									"value": "Sun, 19 Oct 2025 13:17:51 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": null
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Rooms",
+			"item": [
+				{
+					"name": "Create A Room",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGUiOiJBRE1JTiIsInVzZXJpZCI6MSwiaWF0IjoxNzYwODc5NDA4LCJleHAiOjE3NjA4ODMwMDh9.SIfAjWERh_kEz8_cqeis-ob7iOLNA64yshxTWy3RC2k",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"hotelId\": 1,\r\n  \"roomNumber\": \"101\",\r\n  \"capacity\": 2,\r\n  \"pricePerNight\": 120.0\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/rooms",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"rooms"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "New Request",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"hotelId\": 1,\r\n  \"roomNumber\": \"101\",\r\n  \"capacity\": 2,\r\n  \"pricePerNight\": 120.0\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/rooms",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"rooms"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "Date",
+									"value": "Sun, 19 Oct 2025 13:12:27 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 1,\n    \"hotelId\": 1,\n    \"roomNumber\": \"101\",\n    \"capacity\": 2,\n    \"pricePerNight\": 120,\n    \"createdBy\": \"admin\",\n    \"createdAt\": \"2025-10-19T13:12:27.653849\",\n    \"updatedAt\": \"2025-10-19T13:12:27.65392\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Get A Room",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGUiOiJBRE1JTiIsInVzZXJpZCI6MSwiaWF0IjoxNzYwODc5NDA4LCJleHAiOjE3NjA4ODMwMDh9.SIfAjWERh_kEz8_cqeis-ob7iOLNA64yshxTWy3RC2k",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/rooms/1",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"rooms",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "New Request",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseURL}}/rooms/1",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"rooms",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "Date",
+									"value": "Sun, 19 Oct 2025 13:13:02 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 1,\n    \"hotelId\": 1,\n    \"roomNumber\": \"101\",\n    \"capacity\": 2,\n    \"pricePerNight\": 120,\n    \"createdBy\": \"admin\",\n    \"createdAt\": \"2025-10-19T13:12:27.653849\",\n    \"updatedAt\": \"2025-10-19T13:12:27.65392\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Get All Rooms",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGUiOiJBRE1JTiIsInVzZXJpZCI6MSwiaWF0IjoxNzYwODc5NDA4LCJleHAiOjE3NjA4ODMwMDh9.SIfAjWERh_kEz8_cqeis-ob7iOLNA64yshxTWy3RC2k",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/rooms",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"rooms"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "New Request",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseURL}}/rooms",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"rooms"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "Date",
+									"value": "Sun, 19 Oct 2025 13:13:29 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": 1,\n        \"hotelId\": 1,\n        \"roomNumber\": \"101\",\n        \"capacity\": 2,\n        \"pricePerNight\": 120,\n        \"createdBy\": \"admin\",\n        \"createdAt\": \"2025-10-19T13:12:27.653849\",\n        \"updatedAt\": \"2025-10-19T13:12:27.65392\"\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "Update A Room",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGUiOiJBRE1JTiIsInVzZXJpZCI6MSwiaWF0IjoxNzYwODc5NDA4LCJleHAiOjE3NjA4ODMwMDh9.SIfAjWERh_kEz8_cqeis-ob7iOLNA64yshxTWy3RC2k",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"hotelId\": 1,\r\n  \"roomNumber\": \"101\",\r\n  \"capacity\": 2,\r\n  \"pricePerNight\": 120.0\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/rooms/1",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"rooms",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "New Request",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"hotelId\": 1,\r\n  \"roomNumber\": \"101\",\r\n  \"capacity\": 2,\r\n  \"pricePerNight\": 120.0\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/rooms/1",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"rooms",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "Date",
+									"value": "Sun, 19 Oct 2025 13:14:23 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 1,\n    \"hotelId\": 1,\n    \"roomNumber\": \"101\",\n    \"capacity\": 2,\n    \"pricePerNight\": 120,\n    \"createdBy\": \"admin\",\n    \"createdAt\": \"2025-10-19T13:12:27.653849\",\n    \"updatedAt\": \"2025-10-19T13:12:27.65392\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Delete A Room",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGUiOiJBRE1JTiIsInVzZXJpZCI6MSwiaWF0IjoxNzYwODc5NDA4LCJleHAiOjE3NjA4ODMwMDh9.SIfAjWERh_kEz8_cqeis-ob7iOLNA64yshxTWy3RC2k",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/rooms/1",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"rooms",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "New Request",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseURL}}/rooms/1",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"rooms",
+										"1"
+									]
+								}
+							},
+							"status": "No Content",
+							"code": 204,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "Date",
+									"value": "Sun, 19 Oct 2025 13:18:40 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": null
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Reservations",
+			"item": [
+				{
+					"name": "Create A Reservation",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGUiOiJBRE1JTiIsInVzZXJpZCI6MSwiaWF0IjoxNzYwODc5NDA4LCJleHAiOjE3NjA4ODMwMDh9.SIfAjWERh_kEz8_cqeis-ob7iOLNA64yshxTWy3RC2k",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"hotelId\": 1,\r\n  \"roomId\": 1,\r\n  \"guestName\": \"John Doe\",\r\n  \"checkIn\": \"2025-11-01\",\r\n  \"checkOut\": \"2025-11-05\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/reservations",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"reservations"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "New Request",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"hotelId\": 1,\r\n  \"roomId\": 1,\r\n  \"guestName\": \"John Doe\",\r\n  \"checkIn\": \"2025-11-01\",\r\n  \"checkOut\": \"2025-11-05\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/reservations",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"reservations"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "Date",
+									"value": "Sun, 19 Oct 2025 13:15:38 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 1,\n    \"hotelId\": 1,\n    \"roomId\": 1,\n    \"guestName\": \"John Doe\",\n    \"accountUsername\": \"admin\",\n    \"checkInDate\": \"2025-11-01\",\n    \"checkOutDate\": \"2025-11-05\",\n    \"createdAt\": \"2025-10-19T13:15:35.469624\",\n    \"updatedAt\": \"2025-10-19T13:15:35.469765\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Get A Reservation",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGUiOiJBRE1JTiIsInVzZXJpZCI6MSwiaWF0IjoxNzYwODc5NDA4LCJleHAiOjE3NjA4ODMwMDh9.SIfAjWERh_kEz8_cqeis-ob7iOLNA64yshxTWy3RC2k",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/reservations/1",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"reservations",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "New Request",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseURL}}/reservations/1",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"reservations",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "Date",
+									"value": "Sun, 19 Oct 2025 13:16:08 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 1,\n    \"hotelId\": 1,\n    \"roomId\": 1,\n    \"guestName\": \"John Doe\",\n    \"accountUsername\": \"admin\",\n    \"checkInDate\": \"2025-11-01\",\n    \"checkOutDate\": \"2025-11-05\",\n    \"createdAt\": \"2025-10-19T13:15:35.469624\",\n    \"updatedAt\": \"2025-10-19T13:15:35.469765\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Update A Reservation",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGUiOiJBRE1JTiIsInVzZXJpZCI6MSwiaWF0IjoxNzYwODc5NDA4LCJleHAiOjE3NjA4ODMwMDh9.SIfAjWERh_kEz8_cqeis-ob7iOLNA64yshxTWy3RC2k",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"guestName\": \"Jane Doe\",\r\n  \"checkIn\": \"2025-11-02\",\r\n  \"checkOut\": \"2025-11-06\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/reservations/1",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"reservations",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "New Request",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"guestName\": \"Jane Doe\",\r\n  \"checkIn\": \"2025-11-02\",\r\n  \"checkOut\": \"2025-11-06\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/reservations/1",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"reservations",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "Date",
+									"value": "Sun, 19 Oct 2025 13:16:30 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 1,\n    \"hotelId\": 1,\n    \"roomId\": 1,\n    \"guestName\": \"Jane Doe\",\n    \"accountUsername\": \"admin\",\n    \"checkInDate\": \"2025-11-02\",\n    \"checkOutDate\": \"2025-11-06\",\n    \"createdAt\": \"2025-10-19T13:15:35.469624\",\n    \"updatedAt\": \"2025-10-19T13:16:30.115765\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Delete A Reseravtion",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGUiOiJBRE1JTiIsInVzZXJpZCI6MSwiaWF0IjoxNzYwODc5NDA4LCJleHAiOjE3NjA4ODMwMDh9.SIfAjWERh_kEz8_cqeis-ob7iOLNA64yshxTWy3RC2k",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseURL}}/reservations/1",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"reservations",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "New Request",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{baseURL}}/reservations/1",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"reservations",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "Date",
+									"value": "Sun, 19 Oct 2025 13:20:05 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "text/plain;charset=UTF-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "20"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "Deleted successfully"
+						}
+					]
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseURL",
+			"value": ""
+		}
+	]
+}
