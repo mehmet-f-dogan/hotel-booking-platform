@@ -5,10 +5,13 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Import;
 
 import dev.mehmetfd.common.context.CustomRequestContextFilter;
+import dev.mehmetfd.common.exception.GlobalExceptionHandler;
 
 @SpringBootApplication
+@Import(GlobalExceptionHandler.class)
 @EnableDiscoveryClient
 public class HotelServiceApplication {
     public static void main(String[] args) {

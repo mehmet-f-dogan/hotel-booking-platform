@@ -24,7 +24,7 @@ public class RoleFilter implements WebFilter {
 
         Role role = null;
         try {
-            Role.valueOf(roleString);
+            role = Role.valueOf(roleString);
         } catch (Exception e) {
         }
 

@@ -20,7 +20,6 @@ import dev.mehmetfd.auth.dto.UserDto;
 import dev.mehmetfd.common.constants.Role;
 import dev.mehmetfd.common.exception.InvalidCredentialsException;
 
-import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.util.Base64;
 import java.util.Date;
@@ -31,6 +30,10 @@ public class AuthController {
 
     @Value("${jwt.secret}")
     private String jwtSecret;
+
+    public void setJwtSecret(String secret) {
+        this.jwtSecret = secret;
+    }
 
     @Autowired
     private RestTemplate restTemplate;
