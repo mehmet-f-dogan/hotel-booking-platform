@@ -15,7 +15,7 @@ A Spring Boot application for managing hotels and rooms.
 
 1. Make sure you have the following installed:
 
-   - Java 21
+   - Java 17+
    - Maven
    - Docker & Docker Compose
 
