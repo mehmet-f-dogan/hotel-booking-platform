@@ -1,7 +1,10 @@
 package dev.mehmetfd.user.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import dev.mehmetfd.user.dto.CreateUserRequest;
@@ -13,11 +16,10 @@ import dev.mehmetfd.user.repository.UserRepository;
 @RequestMapping("/users")
 public class UserController {
 
-    private final UserRepository userRepository;
+    @Autowired
+    private UserRepository userRepository;
 
-    public UserController(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
+    private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @PostMapping
     public ResponseEntity<UserDto> createUser(@RequestBody CreateUserRequest req) {
@@ -26,7 +28,7 @@ public class UserController {
         }
         User user = new User();
         user.setUsername(req.username());
-        user.setPassword(req.password());
+        user.setPassword(passwordEncoder.encode(req.password()));
         user.setRole(req.role());
         userRepository.save(user);
         return ResponseEntity.status(HttpStatus.CREATED)

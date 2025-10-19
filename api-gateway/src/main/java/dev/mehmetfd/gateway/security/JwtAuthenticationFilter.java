@@ -15,6 +15,8 @@ import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 
 import java.nio.charset.StandardCharsets;
+import java.security.Key;
+import java.util.Base64;
 
 @Component
 public class JwtAuthenticationFilter implements GlobalFilter, Ordered {
@@ -37,9 +39,12 @@ public class JwtAuthenticationFilter implements GlobalFilter, Ordered {
         }
 
         try {
+            byte[] decodedKey = Base64.getDecoder().decode(jwtSecret);
+            Key key = Keys.hmacShaKeyFor(decodedKey);
+
             String token = authHeader.substring(7);
             Claims claims = Jwts.parserBuilder()
-                    .setSigningKey(Keys.hmacShaKeyFor(jwtSecret.getBytes(StandardCharsets.UTF_8)))
+                    .setSigningKey(key)
                     .build()
                     .parseClaimsJws(token)
                     .getBody();
