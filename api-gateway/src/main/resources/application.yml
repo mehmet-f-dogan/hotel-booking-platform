@@ -6,27 +6,25 @@ spring:
   cloud:
     gateway:
       routes:
-        server:
-          webflux:
-            - id: auth-service
-              uri: lb://AUTH-SERVICE
-              predicates:
-                - Path=/api/auth/**
-              filters:
-                - RewritePath=/api/(?<remaining>.*), /${remaining}
-            - id: hotel-service
-              uri: lb://HOTEL-SERVICE
-              predicates:
-                - Path=/api/hotels/**
-                - Path=/api/rooms/**
-              filters:
-                - RewritePath=/api/(?<remaining>.*), /${remaining}
-            - id: reservation-service
-              uri: lb://RESERVATION-SERVICE
-              predicates:
-                - Path=/api/reservations/**
-              filters:
-                - RewritePath=/api/(?<remaining>.*), /${remaining}
+        - id: auth-service
+          uri: lb://AUTH-SERVICE
+          predicates:
+            - Path=/api/auth/**
+          filters:
+            - RewritePath=/api/(?<remaining>.*), /${remaining}
+        - id: hotel-service
+          uri: lb://HOTEL-SERVICE
+          predicates:
+            - Path=/api/hotels/**
+            - Path=/api/rooms/**
+          filters:
+            - RewritePath=/api/(?<remaining>.*), /${remaining}
+        - id: reservation-service
+          uri: lb://RESERVATION-SERVICE
+          predicates:
+            - Path=/api/reservations/**
+          filters:
+            - RewritePath=/api/(?<remaining>.*), /${remaining}
     discovery:
       locator:
         enabled: true

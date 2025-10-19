@@ -125,7 +125,7 @@ public class AuthController {
         try {
             restTemplate.postForEntity(url, req, Void.class);
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to create user");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Failed to create user");
         }
         return ResponseEntity.status(HttpStatus.CREATED).body("User created");
     }

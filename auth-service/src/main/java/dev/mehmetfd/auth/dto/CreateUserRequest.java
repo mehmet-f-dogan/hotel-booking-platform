@@ -1,4 +1,6 @@
 package dev.mehmetfd.auth.dto;
 
-public record CreateUserRequest(String username, String password, String role) {
+import dev.mehmetfd.common.constants.Role;
+
+public record CreateUserRequest(String username, String password, Role role) {
 }

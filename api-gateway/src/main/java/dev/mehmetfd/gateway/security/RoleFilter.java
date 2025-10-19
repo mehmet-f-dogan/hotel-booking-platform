@@ -21,7 +21,12 @@ public class RoleFilter implements WebFilter {
         String path = exchange.getRequest().getURI().getPath();
 
         String roleString = exchange.getRequest().getHeaders().getFirst("X-User-Role");
-        Role role = Role.valueOf(roleString);
+
+        Role role = null;
+        try {
+            Role.valueOf(roleString);
+        } catch (Exception e) {
+        }
 
         HttpMethod method = exchange.getRequest().getMethod();
 

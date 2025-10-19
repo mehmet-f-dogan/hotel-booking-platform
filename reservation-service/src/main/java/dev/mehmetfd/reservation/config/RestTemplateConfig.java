@@ -1,4 +1,4 @@
-package dev.mehmetfd.common.config;
+package dev.mehmetfd.reservation.config;
 
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
