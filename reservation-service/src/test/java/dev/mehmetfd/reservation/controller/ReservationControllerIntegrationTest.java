@@ -102,7 +102,7 @@ class ReservationControllerIntegrationTest {
 
                 CreateReservationRequest req = new CreateReservationRequest(hotelId, roomId, "Guest1", checkIn,
                                 checkOut);
-                mockMvc.perform(post("/reservation")
+                mockMvc.perform(post("/reservations")
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(objectMapper.writeValueAsString(req)))
                                 .andExpect(status().isOk())
