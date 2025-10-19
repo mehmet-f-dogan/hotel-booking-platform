@@ -1,0 +1,11 @@
+spring:
+  cloud:
+    discovery:
+      enabled: false
+  main:
+    allow-bean-definition-overriding: true
+eureka:
+  client:
+    enabled: false
+    register-with-eureka: false
+    fetch-registry: false

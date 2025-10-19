@@ -11,6 +11,7 @@ import dev.mehmetfd.user.dto.CreateUserRequest;
 import dev.mehmetfd.user.dto.UserDto;
 import dev.mehmetfd.user.model.User;
 import dev.mehmetfd.user.repository.UserRepository;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/users")
@@ -22,7 +23,7 @@ public class UserController {
     private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @PostMapping
-    public ResponseEntity<UserDto> createUser(@RequestBody CreateUserRequest req) {
+    public ResponseEntity<UserDto> createUser(@Valid @RequestBody CreateUserRequest req) {
         if (userRepository.findByUsername(req.username()).isPresent()) {
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }

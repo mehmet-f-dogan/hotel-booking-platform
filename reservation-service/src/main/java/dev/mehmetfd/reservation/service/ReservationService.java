@@ -4,7 +4,9 @@ import dev.mehmetfd.common.context.RequestContext;
 import dev.mehmetfd.common.context.RequestContextHolder;
 import dev.mehmetfd.common.dto.ReservationEvent;
 import dev.mehmetfd.common.dto.RoomDto;
+import dev.mehmetfd.common.exception.BadRequestException;
 import dev.mehmetfd.common.exception.ResourceNotFoundException;
+import dev.mehmetfd.common.exception.TryLaterException;
 import dev.mehmetfd.reservation.model.Reservation;
 import dev.mehmetfd.reservation.repository.ReservationRepository;
 
@@ -58,7 +60,7 @@ public class ReservationService {
         lockService.executeWithLock(lockKey, () -> {
             List<Reservation> conflicts = reservationRepository.findOverlappingReservations(roomId, checkIn, checkOut);
             if (!conflicts.isEmpty()) {
-                throw new IllegalStateException("Room " + roomId + " is already reserved in that date range");
+                throw new BadRequestException("Room " + roomId + " is already reserved in that date range");
             }
 
             RequestContext ctx = RequestContextHolder.get();
@@ -70,7 +72,11 @@ public class ReservationService {
             reservationEventProducer.sendReservationEvent(toEvent(savedReservation[0], accountUsername));
         });
 
-        return savedReservation[0];
+        Reservation returnReservation = savedReservation[0];
+        if (returnReservation == null){
+            throw new TryLaterException();
+        }
+        return returnReservation;
     }
 
     @Transactional
@@ -102,12 +108,12 @@ public class ReservationService {
         return reservation;
     }
 
-    @Transactional
-    public void deleteReservation(Long id) {
+    public void deleteReservation(long id) {
         Reservation reservation = reservationRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Reservation not found"));
 
         String lockKey = "room-" + reservation.getRoomId();
+
         lockService.executeWithLock(lockKey, () -> {
             reservationRepository.deleteById(id);
             reservationEventProducer.sendReservationDeleteEvent(reservation.getId());
@@ -115,7 +121,16 @@ public class ReservationService {
     }
 
     public Optional<Reservation> getReservation(Long id) {
-        return reservationRepository.findById(id);
+        RequestContext ctx = RequestContextHolder.get();
+        String accountUsername = ctx.username();
+        Optional<Reservation> optionalReservation = reservationRepository.findById(id);
+        if(optionalReservation.isPresent() ){
+            Reservation r = optionalReservation.get();
+            if(r.getAccountUsername().equals(accountUsername)){
+                return Optional.of(r);
+            }
+        }
+        throw new ResourceNotFoundException("Reservation not found");
     }
 
     public List<Reservation> getAllReservations() {

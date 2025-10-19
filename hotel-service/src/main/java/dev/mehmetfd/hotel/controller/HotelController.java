@@ -26,7 +26,7 @@ public class HotelController {
     }
 
     @GetMapping("/{id}")
-    public Hotel getHotel(@PathVariable Long id) {
+    public Hotel getHotel(@PathVariable(name = "id") long id) {
         return hotelService.getHotel(id);
     }
 
@@ -36,13 +36,13 @@ public class HotelController {
     }
 
     @PutMapping("/{id}")
-    public Hotel updateHotel(@PathVariable Long id, @Valid @RequestBody HotelRequest request) {
+    public Hotel updateHotel(@PathVariable(name = "id") long id, @Valid @RequestBody HotelRequest request) {
         return hotelService.updateHotel(id, request);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteHotel(@PathVariable Long id) {
+    public void deleteHotel(@PathVariable(name = "id") long id) {
         hotelService.deleteHotel(id);
     }
 }

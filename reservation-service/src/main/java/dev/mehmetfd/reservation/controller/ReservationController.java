@@ -7,11 +7,10 @@ import dev.mehmetfd.reservation.service.ReservationService;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/reservation")
+@RequestMapping("/reservations")
 public class ReservationController {
 
     private final ReservationService reservationService;
@@ -20,7 +19,7 @@ public class ReservationController {
         this.reservationService = reservationService;
     }
 
-    @PostMapping("/create")
+    @PostMapping
     public Reservation create(@RequestBody @Valid CreateReservationRequest request) {
         return reservationService.createReservation(
                 request.hotelId(),
@@ -31,17 +30,13 @@ public class ReservationController {
     }
 
     @GetMapping("/{id}")
-    public Optional<Reservation> get(@PathVariable Long id) {
+    public Optional<Reservation> get(@PathVariable(name = "id") long id) {
         return reservationService.getReservation(id);
     }
 
-    @GetMapping("/all")
-    public List<Reservation> getAll() {
-        return reservationService.getAllReservations();
-    }
-
     @PutMapping("/{id}")
-    public Reservation update(@PathVariable Long id, @RequestBody @Valid UpdateReservationRequest request) {
+    public Reservation update(@PathVariable(name = "id") long id,
+            @RequestBody @Valid UpdateReservationRequest request) {
         return reservationService.updateReservation(
                 id,
                 request.checkIn(),
@@ -50,7 +45,7 @@ public class ReservationController {
     }
 
     @DeleteMapping("/{id}")
-    public String delete(@PathVariable Long id) {
+    public String delete(@PathVariable(name = "id") long id) {
         reservationService.deleteReservation(id);
         return "Deleted successfully";
     }

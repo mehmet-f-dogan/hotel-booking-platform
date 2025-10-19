@@ -3,35 +3,33 @@ package dev.mehmetfd.common.exception;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.http.ResponseEntity;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(ResourceNotFoundException.class)
-    public ErrorResponse handleNotFound(ResourceNotFoundException ex, WebRequest request) {
-        return new ErrorResponse(HttpStatus.NOT_FOUND.value(), ex.getMessage());
+    public ResponseEntity<String> handleNotFound(ResourceNotFoundException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
     }
 
     @ExceptionHandler(BadRequestException.class)
-    public ErrorResponse handleBadRequest(BadRequestException ex, WebRequest request) {
-        return new ErrorResponse(HttpStatus.BAD_REQUEST.value(), ex.getMessage());
+    public ResponseEntity<String> handleBadRequest(BadRequestException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
     }
 
     @ExceptionHandler(TryLaterException.class)
-    public ErrorResponse handleTryLater(Exception ex, WebRequest request) {
-        return new ErrorResponse(HttpStatus.SERVICE_UNAVAILABLE.value(), ex.getMessage());
+    public ResponseEntity<String> handleTryLater(TryLaterException ex) {
+        return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(ex.getMessage());
     }
 
     @ExceptionHandler(InvalidCredentialsException.class)
-    public ErrorResponse handleInvalidCredentials(Exception ex, WebRequest request) {
-        return new ErrorResponse(HttpStatus.UNAUTHORIZED.value(), ex.getMessage());
+    public ResponseEntity<String> handleInvalidCredentials(InvalidCredentialsException ex) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ex.getMessage());
     }
 
     @ExceptionHandler(Exception.class)
-    public ErrorResponse handleGeneral(Exception ex, WebRequest request) {
-        return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Internal server error");
-    }
-
-    public record ErrorResponse(int status, String message) {
+    public ResponseEntity<String> handleGeneral(Exception ex) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Internal server error");
     }
 }

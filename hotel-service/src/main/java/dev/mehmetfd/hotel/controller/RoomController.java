@@ -27,7 +27,7 @@ public class RoomController {
     }
 
     @GetMapping("/{id}")
-    public RoomDto getRoom(@PathVariable Long id) {
+    public RoomDto getRoom(@PathVariable(name = "id") long id) {
         Room room = roomService.getRoom(id);
         return new RoomDto(id, room.getHotelId(), room.getRoomNumber(), room.getCapacity(), room.getPricePerNight(),
                 room.getCreatedBy(), room.getCreatedAt(), room.getUpdatedAt());
@@ -43,13 +43,13 @@ public class RoomController {
     }
 
     @PutMapping("/{id}")
-    public Room updateRoom(@PathVariable Long id, @Valid @RequestBody RoomRequest request) {
+    public Room updateRoom(@PathVariable(name = "id") long id, @Valid @RequestBody RoomRequest request) {
         return roomService.updateRoom(id, request);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteRoom(@PathVariable Long id) {
+    public void deleteRoom(@PathVariable(name = "id") long id) {
         roomService.deleteRoom(id);
     }
 }
