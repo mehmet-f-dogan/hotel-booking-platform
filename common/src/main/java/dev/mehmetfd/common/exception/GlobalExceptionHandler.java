@@ -22,6 +22,11 @@ public class GlobalExceptionHandler {
         return new ErrorResponse(HttpStatus.SERVICE_UNAVAILABLE.value(), ex.getMessage());
     }
 
+    @ExceptionHandler(InvalidCredentialsException.class)
+    public ErrorResponse handleInvalidCredentials(Exception ex, WebRequest request) {
+        return new ErrorResponse(HttpStatus.UNAUTHORIZED.value(), ex.getMessage());
+    }
+
     @ExceptionHandler(Exception.class)
     public ErrorResponse handleGeneral(Exception ex, WebRequest request) {
         return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Internal server error");

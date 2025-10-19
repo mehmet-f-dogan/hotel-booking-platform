@@ -18,6 +18,7 @@ import dev.mehmetfd.auth.dto.LoginRequest;
 import dev.mehmetfd.auth.dto.LoginResponse;
 import dev.mehmetfd.auth.dto.UserDto;
 import dev.mehmetfd.common.constants.Role;
+import dev.mehmetfd.common.exception.InvalidCredentialsException;
 
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
@@ -43,11 +44,11 @@ public class AuthController {
         try {
             user = restTemplate.getForObject(url, UserDto.class);
         } catch (Exception e) {
-            throw new RuntimeException("Invalid username or password");
+            throw new InvalidCredentialsException();
         }
 
         if (user == null || !passwordEncoder.matches(req.password(), user.password())) {
-            throw new RuntimeException("Invalid username or password");
+            throw new InvalidCredentialsException();
         }
 
         byte[] decodedKey = Base64.getDecoder().decode(jwtSecret);
@@ -85,7 +86,8 @@ public class AuthController {
 
             String refreshToken = authHeader.substring(7);
 
-            Key key = Keys.hmacShaKeyFor(jwtSecret.getBytes(StandardCharsets.UTF_8));
+            byte[] decodedKey = Base64.getDecoder().decode(jwtSecret);
+            Key key = Keys.hmacShaKeyFor(decodedKey);
 
             var claimsJws = Jwts.parserBuilder()
                     .setSigningKey(key)
