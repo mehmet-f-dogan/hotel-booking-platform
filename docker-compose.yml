@@ -8,16 +8,20 @@ services:
     build: ./auth-service
     container_name: auth-service
     image: hotel-platform/auth-service
-    environment:
-      - SPRING_PROFILES_ACTIVE=docker
-      - JWT_SECRET=0645a4fb9156ffade8326244fc479dcc56e59295bea45f10212d0b4232087467
     depends_on:
       user-service:
-        condition: service_started
+        condition: service_healthy
       discovery-service:
         condition: service_healthy
     networks:
       - hotelnet
+    healthcheck:
+      test:
+        ["CMD-SHELL", "curl -f http://localhost:8080/actuator/health || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+      start_period: 10s
 
   # ==============================
   # USER SERVICE
@@ -26,8 +30,6 @@ services:
     build: ./user-service
     container_name: user-service
     image: hotel-platform/user-service
-    environment:
-      - SPRING_PROFILES_ACTIVE=docker
     depends_on:
       discovery-service:
         condition: service_healthy
@@ -35,6 +37,13 @@ services:
         condition: service_healthy
     networks:
       - hotelnet
+    healthcheck:
+      test:
+        ["CMD-SHELL", "curl -f http://localhost:8080/actuator/health || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+      start_period: 10s
 
   # ==============================
   # HOTEL SERVICE
@@ -43,13 +52,18 @@ services:
     build: ./hotel-service
     container_name: hotel-service
     image: hotel-platform/hotel-service
-    environment:
-      - SPRING_PROFILES_ACTIVE=docker
     depends_on:
       discovery-service:
         condition: service_healthy
     networks:
       - hotelnet
+    healthcheck:
+      test:
+        ["CMD-SHELL", "curl -f http://localhost:8080/actuator/health || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+      start_period: 10s
 
   # ==============================
   # RESERVATION SERVICE
@@ -58,10 +72,10 @@ services:
     build: ./reservation-service
     container_name: reservation-service
     image: hotel-platform/reservation-service
-    environment:
-      - SPRING_PROFILES_ACTIVE=docker
     depends_on:
       discovery-service:
+        condition: service_healthy
+      hotel-service:
         condition: service_healthy
       db:
         condition: service_healthy
@@ -71,6 +85,13 @@ services:
         condition: service_healthy
     networks:
       - hotelnet
+    healthcheck:
+      test:
+        ["CMD-SHELL", "curl -f http://localhost:8080/actuator/health || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+      start_period: 10s
 
   # ==============================
   # NOTIFICATION SERVICE
@@ -79,8 +100,6 @@ services:
     build: ./notification-service
     container_name: notification-service
     image: hotel-platform/notification-service
-    environment:
-      - SPRING_PROFILES_ACTIVE=docker
     depends_on:
       discovery-service:
         condition: service_healthy
@@ -88,6 +107,13 @@ services:
         condition: service_healthy
     networks:
       - hotelnet
+    healthcheck:
+      test:
+        ["CMD-SHELL", "curl -f http://localhost:8080/actuator/health || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+      start_period: 10s
 
   # ==============================
   # API GATEWAY
@@ -98,22 +124,19 @@ services:
     image: hotel-platform/api-gateway
     ports:
       - "8080:8080"
-    environment:
-      - SPRING_PROFILES_ACTIVE=docker
-      - JWT_SECRET=0645a4fb9156ffade8326244fc479dcc56e59295bea45f10212d0b4232087467
     depends_on:
       discovery-service:
         condition: service_healthy
       auth-service:
-        condition: service_started
+        condition: service_healthy
       user-service:
-        condition: service_started
+        condition: service_healthy
       hotel-service:
-        condition: service_started
+        condition: service_healthy
       reservation-service:
-        condition: service_started
+        condition: service_healthy
       notification-service:
-        condition: service_started
+        condition: service_healthy
     networks:
       - hotelnet
 
@@ -132,7 +155,7 @@ services:
         ["CMD-SHELL", "curl -f http://localhost:8761/actuator/health || exit 1"]
       interval: 10s
       timeout: 5s
-      retries: 5
+      retries: 20
       start_period: 10s
 
   # ==============================
@@ -149,7 +172,7 @@ services:
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
       interval: 5s
-      retries: 5
+      retries: 20
       start_period: 10s
 
   # ==============================
@@ -163,7 +186,7 @@ services:
     healthcheck:
       test: ["CMD", "redis-cli", "ping"]
       interval: 5s
-      retries: 5
+      retries: 20
 
   # ==============================
   # KAFKA
@@ -194,7 +217,7 @@ services:
     healthcheck:
       test: ["CMD", "kafka-topics", "--bootstrap-server=kafka:9092", "--list"]
       interval: 10s
-      retries: 5
+      retries: 20
 
   # ==============================
   # NETWORK

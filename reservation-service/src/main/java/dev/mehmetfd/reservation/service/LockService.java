@@ -3,6 +3,8 @@ package dev.mehmetfd.reservation.service;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
+import dev.mehmetfd.common.exception.TryLaterException;
+
 import java.util.concurrent.TimeUnit;
 
 @Service
@@ -42,12 +44,12 @@ public class LockService {
                 Thread.sleep(retryDelayMs);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
-                throw new IllegalStateException("Interrupted while waiting for lock: " + key);
+                throw new TryLaterException();
             }
         }
 
         if (!locked) {
-            throw new IllegalStateException("Could not acquire lock for key: " + key);
+            throw new TryLaterException();
         }
 
         try {

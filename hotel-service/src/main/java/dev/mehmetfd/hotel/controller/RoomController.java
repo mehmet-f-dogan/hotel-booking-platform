@@ -3,6 +3,7 @@ package dev.mehmetfd.hotel.controller;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import dev.mehmetfd.common.dto.RoomDto;
 import dev.mehmetfd.hotel.dto.RoomRequest;
 import dev.mehmetfd.hotel.model.Room;
 import dev.mehmetfd.hotel.service.RoomService;
@@ -26,13 +27,19 @@ public class RoomController {
     }
 
     @GetMapping("/{id}")
-    public Room getRoom(@PathVariable Long id) {
-        return roomService.getRoom(id);
+    public RoomDto getRoom(@PathVariable Long id) {
+        Room room = roomService.getRoom(id);
+        return new RoomDto(id, room.getHotelId(), room.getRoomNumber(), room.getCapacity(), room.getPricePerNight(),
+                room.getCreatedBy(), room.getCreatedAt(), room.getUpdatedAt());
     }
 
     @GetMapping
-    public List<Room> getAllRooms() {
-        return roomService.getAllRooms();
+    public List<RoomDto> getAllRooms() {
+        return roomService.getAllRooms().stream().map(room -> {
+            return new RoomDto(room.getId(), room.getHotelId(), room.getRoomNumber(), room.getCapacity(),
+                    room.getPricePerNight(),
+                    room.getCreatedBy(), room.getCreatedAt(), room.getUpdatedAt());
+        }).toList();
     }
 
     @PutMapping("/{id}")

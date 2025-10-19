@@ -8,10 +8,6 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 @EnableDiscoveryClient
 public class UserServiceApplication {
     public static void main(String[] args) {
-        SpringApplication app = new SpringApplication(UserServiceApplication.class);
-
-        app.setBanner((environment, sourceClass, out) -> {
-            out.println("=== User Service ===");
-        });
+        SpringApplication.run(UserServiceApplication.class, args);
     }
 }

@@ -6,23 +6,19 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.Bean;
 
-import dev.mehmetfd.common.context.RequestContextFilter;
+import dev.mehmetfd.common.context.CustomRequestContextFilter;
 
 @SpringBootApplication
 @EnableDiscoveryClient
 public class HotelServiceApplication {
     public static void main(String[] args) {
-        SpringApplication app = new SpringApplication(HotelServiceApplication.class);
-
-        app.setBanner((environment, sourceClass, out) -> {
-            out.println("=== Hotel Service ===");
-        });
+        SpringApplication.run(HotelServiceApplication.class, args);
     }
 
     @Bean
-    public FilterRegistrationBean<RequestContextFilter> requestContextFilter() {
-        FilterRegistrationBean<RequestContextFilter> registration = new FilterRegistrationBean<>();
-        registration.setFilter(new RequestContextFilter());
+    public FilterRegistrationBean<CustomRequestContextFilter> customRequestContextFilter() {
+        FilterRegistrationBean<CustomRequestContextFilter> registration = new FilterRegistrationBean<>();
+        registration.setFilter(new CustomRequestContextFilter());
         registration.addUrlPatterns("/*");
         return registration;
     }

@@ -8,10 +8,6 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 @EnableDiscoveryClient
 public class AuthServiceApplication {
     public static void main(String[] args) {
-        SpringApplication app = new SpringApplication(AuthServiceApplication.class);
-
-        app.setBanner((environment, sourceClass, out) -> {
-            out.println("=== Auth Service ===");
-        });
+        SpringApplication.run(AuthServiceApplication.class, args);
     }
 }

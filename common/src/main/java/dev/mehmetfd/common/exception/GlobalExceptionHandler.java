@@ -17,6 +17,11 @@ public class GlobalExceptionHandler {
         return new ErrorResponse(HttpStatus.BAD_REQUEST.value(), ex.getMessage());
     }
 
+    @ExceptionHandler(TryLaterException.class)
+    public ErrorResponse handleTryLater(Exception ex, WebRequest request) {
+        return new ErrorResponse(HttpStatus.SERVICE_UNAVAILABLE.value(), ex.getMessage());
+    }
+
     @ExceptionHandler(Exception.class)
     public ErrorResponse handleGeneral(Exception ex, WebRequest request) {
         return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Internal server error");

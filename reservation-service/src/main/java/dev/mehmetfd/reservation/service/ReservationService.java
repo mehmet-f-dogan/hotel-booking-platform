@@ -3,10 +3,14 @@ package dev.mehmetfd.reservation.service;
 import dev.mehmetfd.common.context.RequestContext;
 import dev.mehmetfd.common.context.RequestContextHolder;
 import dev.mehmetfd.common.dto.ReservationEvent;
+import dev.mehmetfd.common.dto.RoomDto;
+import dev.mehmetfd.common.exception.ResourceNotFoundException;
 import dev.mehmetfd.reservation.model.Reservation;
 import dev.mehmetfd.reservation.repository.ReservationRepository;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -18,18 +22,34 @@ public class ReservationService {
     private final LockService lockService;
     private final ReservationRepository reservationRepository;
     private final ReservationEventProducer reservationEventProducer;
+    private final RestTemplate restTemplate;
 
     public ReservationService(LockService lockService,
             ReservationRepository reservationRepository,
-            ReservationEventProducer reservationEventProducer) {
+            ReservationEventProducer reservationEventProducer,
+            RestTemplate restTemplate) {
         this.lockService = lockService;
         this.reservationRepository = reservationRepository;
         this.reservationEventProducer = reservationEventProducer;
+        this.restTemplate = restTemplate;
     }
 
     @Transactional
     public Reservation createReservation(Long hotelId, Long roomId, String guestName, LocalDate checkIn,
             LocalDate checkOut) {
+
+        String url = "http://HOTEL-SERVICE/rooms/" + roomId;
+        RoomDto roomDto;
+        try {
+            roomDto = restTemplate.getForObject(url, RoomDto.class);
+        } catch (Exception e) {
+            throw new ResourceNotFoundException("Room not found");
+        }
+
+        if (roomDto.hotelId() != hotelId) {
+            throw new ResourceNotFoundException("Room not found");
+        }
+
         validateDates(checkIn, checkOut);
 
         String lockKey = "room-" + roomId;

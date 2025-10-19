@@ -1,4 +1,4 @@
-package dev.mehmetfd.auth.config;
+package dev.mehmetfd.common.config;
 
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
