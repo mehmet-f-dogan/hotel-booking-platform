@@ -20,6 +20,9 @@ class HotelServiceTest {
     @Mock
     private HotelRepository hotelRepository;
 
+    @Mock
+    private RoomService roomService;
+
     @InjectMocks
     private HotelService hotelService;
 

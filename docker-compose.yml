@@ -55,6 +55,8 @@ services:
     depends_on:
       discovery-service:
         condition: service_healthy
+      kafka:
+        condition: service_healthy
     networks:
       - hotelnet
     healthcheck:

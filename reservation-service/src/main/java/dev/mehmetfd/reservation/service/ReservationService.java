@@ -156,6 +156,11 @@ public class ReservationService {
         return reservationRepository.findAll();
     }
 
+    @Transactional
+    public void deleteRoomReservations(long roomId) {
+        reservationRepository.deleteAllByRoomId(roomId);
+    }
+
     private void validateDates(LocalDate checkIn, LocalDate checkOut) {
         LocalDate today = LocalDate.now();
         if (checkIn.isBefore(today) || checkOut.isBefore(today)) {

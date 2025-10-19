@@ -17,9 +17,11 @@ import java.util.List;
 public class HotelService {
 
     private final HotelRepository hotelRepository;
+    private final RoomService roomService;
 
-    public HotelService(HotelRepository hotelRepository) {
+    public HotelService(HotelRepository hotelRepository, RoomService roomService) {
         this.hotelRepository = hotelRepository;
+        this.roomService = roomService;
     }
 
     public Hotel createHotel(HotelRequest request) {
@@ -51,8 +53,10 @@ public class HotelService {
         return hotelRepository.save(hotel);
     }
 
+    @Transactional
     public void deleteHotel(Long id) {
         Hotel hotel = getHotel(id);
         hotelRepository.delete(hotel);
+        roomService.deleteHotelRooms(id);
     }
 }

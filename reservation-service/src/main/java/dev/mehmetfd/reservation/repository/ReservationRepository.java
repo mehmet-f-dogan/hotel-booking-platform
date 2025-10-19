@@ -10,15 +10,16 @@ import java.util.List;
 
 public interface ReservationRepository extends JpaRepository<Reservation, Long> {
 
-    @Query("""
-           SELECT r FROM Reservation r
-           WHERE r.roomId = :roomId
-             AND r.checkInDate < :checkOutDate
-             AND r.checkOutDate > :checkInDate
-           """)
-    List<Reservation> findOverlappingReservations(
-            @Param("roomId") Long roomId,
-            @Param("checkInDate") LocalDate checkInDate,
-            @Param("checkOutDate") LocalDate checkOutDate
-    );
+  @Query("""
+      SELECT r FROM Reservation r
+      WHERE r.roomId = :roomId
+        AND r.checkInDate < :checkOutDate
+        AND r.checkOutDate > :checkInDate
+      """)
+  List<Reservation> findOverlappingReservations(
+      @Param("roomId") Long roomId,
+      @Param("checkInDate") LocalDate checkInDate,
+      @Param("checkOutDate") LocalDate checkOutDate);
+
+  void deleteAllByRoomId(long roomId);
 }

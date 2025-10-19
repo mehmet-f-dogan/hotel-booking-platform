@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import dev.mehmetfd.common.context.RequestContext;
 import dev.mehmetfd.common.context.RequestContextHolder;
+import dev.mehmetfd.common.dto.RoomRemovalEvent;
 import dev.mehmetfd.common.exception.BadRequestException;
 import dev.mehmetfd.common.exception.ResourceNotFoundException;
 import dev.mehmetfd.hotel.dto.RoomRequest;
@@ -20,10 +21,13 @@ public class RoomService {
 
     private final RoomRepository roomRepository;
     private final HotelRepository hotelRepository;
+    private final RoomRemovalEventProducer roomRemovalEventProducer;
 
-    public RoomService(RoomRepository roomRepository, HotelRepository hotelRepository) {
+    public RoomService(RoomRepository roomRepository, HotelRepository hotelRepository,
+            RoomRemovalEventProducer roomRemovalEventProducer) {
         this.roomRepository = roomRepository;
         this.hotelRepository = hotelRepository;
+        this.roomRemovalEventProducer = roomRemovalEventProducer;
     }
 
     public Room createRoom(RoomRequest request) {
@@ -71,5 +75,12 @@ public class RoomService {
     public void deleteRoom(Long id) {
         Room room = getRoom(id);
         roomRepository.delete(room);
+        roomRemovalEventProducer.sendRoomRemovalEvent(new RoomRemovalEvent(room.getHotelId()));
+    }
+
+    public void deleteHotelRooms(Long hotelId) {
+        List<Room> removedRooms = roomRepository.findAllByHotelId(hotelId);
+        roomRepository.deleteAllByHotelId(hotelId);
+        removedRooms.forEach(r -> roomRemovalEventProducer.sendRoomRemovalEvent(new RoomRemovalEvent(r.getHotelId())));
     }
 }
