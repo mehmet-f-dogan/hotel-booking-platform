@@ -1,12 +1,12 @@
 package dev.mehmetfd.reservation.model;
 
-import jakarta.annotation.Nonnull;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -23,26 +23,29 @@ public class Reservation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Nonnull
+    @Column(nullable = false)
     private Long hotelId;
 
-    @Nonnull
+    @Column(nullable = false)
     private Long roomId;
 
-    @Nonnull
+    @Column(nullable = false)
     private String guestName;
 
-    @Nonnull
+    @Column(nullable = false)
     private String accountUsername;
 
-    @Nonnull
+    @Column(nullable = false)
     private LocalDate checkInDate;
 
-    @Nonnull
+    @Column(nullable = false)
     private LocalDate checkOutDate;
 
     @CreationTimestamp
     private LocalDateTime createdAt;
+
+    @UpdateTimestamp
+    private LocalDateTime updatedAt;
 
     public Reservation(Long hotelId, Long roomId, String guestName, String accountUsername, LocalDate checkInDate,
             LocalDate checkOutDate) {

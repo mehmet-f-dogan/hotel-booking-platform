@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: hotel-service
+  datasource:
+    url: jdbc:postgresql://db:5432/hoteldb
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://discovery-service:8761/eureka/
