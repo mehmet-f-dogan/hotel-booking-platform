@@ -3,6 +3,8 @@ package dev.mehmetfd.auth.controller;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -41,7 +43,7 @@ public class AuthController {
     private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @PostMapping("/login")
-    public LoginResponse login(@RequestBody LoginRequest req) {
+    public LoginResponse login(@RequestBody @Valid @NotNull LoginRequest req) {
         String url = "http://USER-SERVICE/users/" + req.username();
         UserDto user;
         try {
@@ -125,7 +127,7 @@ public class AuthController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<String> createUser(@RequestBody CreateUserRequest req) {
+    public ResponseEntity<String> createUser(@RequestBody @Valid @NotNull CreateUserRequest req) {
         String url = "http://USER-SERVICE/users";
         try {
             restTemplate.postForEntity(url, req, Void.class);

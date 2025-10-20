@@ -8,6 +8,8 @@ import dev.mehmetfd.hotel.dto.RoomRequest;
 import dev.mehmetfd.hotel.model.Room;
 import dev.mehmetfd.hotel.service.RoomService;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
+
 import java.util.List;
 
 @RestController
@@ -22,7 +24,7 @@ public class RoomController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Room createRoom(@Valid @RequestBody RoomRequest request) {
+    public Room createRoom(@Valid @NotNull @RequestBody RoomRequest request) {
         return roomService.createRoom(request);
     }
 
@@ -43,7 +45,7 @@ public class RoomController {
     }
 
     @PutMapping("/{id}")
-    public Room updateRoom(@PathVariable(name = "id") long id, @Valid @RequestBody RoomRequest request) {
+    public Room updateRoom(@PathVariable(name = "id") long id, @Valid @NotNull @RequestBody RoomRequest request) {
         return roomService.updateRoom(id, request);
     }
 

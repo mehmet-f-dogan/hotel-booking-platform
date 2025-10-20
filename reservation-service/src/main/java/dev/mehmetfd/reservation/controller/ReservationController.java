@@ -5,6 +5,8 @@ import dev.mehmetfd.common.dto.UpdateReservationRequest;
 import dev.mehmetfd.reservation.model.Reservation;
 import dev.mehmetfd.reservation.service.ReservationService;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
+
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -20,7 +22,7 @@ public class ReservationController {
     }
 
     @PostMapping
-    public Reservation create(@RequestBody @Valid CreateReservationRequest request) {
+    public Reservation create(@RequestBody @Valid @NotNull CreateReservationRequest request) {
         return reservationService.createReservation(
                 request.hotelId(),
                 request.roomId(),
@@ -36,7 +38,7 @@ public class ReservationController {
 
     @PutMapping("/{id}")
     public Reservation update(@PathVariable(name = "id") long id,
-            @RequestBody @Valid UpdateReservationRequest request) {
+            @RequestBody @Valid @NotNull UpdateReservationRequest request) {
         return reservationService.updateReservation(
                 id,
                 request.checkIn(),

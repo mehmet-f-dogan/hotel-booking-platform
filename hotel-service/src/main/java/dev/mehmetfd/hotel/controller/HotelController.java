@@ -7,6 +7,8 @@ import dev.mehmetfd.hotel.dto.HotelRequest;
 import dev.mehmetfd.hotel.model.Hotel;
 import dev.mehmetfd.hotel.service.HotelService;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
+
 import java.util.List;
 
 @RestController
@@ -21,7 +23,7 @@ public class HotelController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Hotel createHotel(@Valid @RequestBody HotelRequest request) {
+    public Hotel createHotel(@Valid @RequestBody @NotNull HotelRequest request) {
         return hotelService.createHotel(request);
     }
 
@@ -36,7 +38,7 @@ public class HotelController {
     }
 
     @PutMapping("/{id}")
-    public Hotel updateHotel(@PathVariable(name = "id") long id, @Valid @RequestBody HotelRequest request) {
+    public Hotel updateHotel(@PathVariable(name = "id") long id, @Valid @NotNull @RequestBody HotelRequest request) {
         return hotelService.updateHotel(id, request);
     }
 
